@@ -1,0 +1,147 @@
+<!DOCTYPE html5>
+<html lang="en">
+
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/css/bootstrap.min.css" rel="stylesheet">
+  <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+  <title>Hamilton Homes</title>
+  <style>
+    .img-table {
+      width: auto;
+      /* Use 'auto' to maintain aspect ratio */
+      height: 100px;
+      /* Set a fixed height */
+      max-width: 100%;
+      /* Make sure the image is not wider than its container */
+      object-fit: contain;
+      /* This will make sure the image is scaled properly */
+    }
+  </style>
+</head>
+
+<body>
+  <nav class="navbar navbar-expand-lg navbar-dark bg-primary">
+    <div class="container-fluid">
+      <a class="navbar-brand" href="#">Hamilton Homes</a>
+      <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav"
+        aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
+        <span class="navbar-toggler-icon"></span>
+      </button>
+      <div class="collapse navbar-collapse" id="navbarNav">
+        <div class="navbar-nav">
+          <a class="nav-link" href="#Home">Home</a>
+          <a class="nav-link active" href="#">Search</a>
+          <a class="nav-link" href="#map">Map</a>
+          <a class="nav-link" href="#calculator">Calculator</a>
+          <a class="nav-link" href="#realtors">Realtors</a>
+          <a class="nav-link" href="#login">Login</a>
+        </div>
+      </div>
+    </div>
+  </nav>
+  <div>
+
+    <form>
+      <input type="button" id="ancasterButton" value="Ancaster"></input>
+      <input type="button" id="dundasButton" value="Dundas"></input>
+      <input type="button" id="mountainButton" value="Mountain"></input>
+      <input type="button" id="stoneyCreekButton" value="Stoney Creek"></input>
+      <input type="button" id="waterdownButton" value="Waterdown"></input>
+      <input type="button" id="filterBedroomButton" value="Filter by Bedroom"></input>
+      <select id="filterBedroomDropdown">
+        <option value=1>1</option>
+        <option value=2>2</option>
+        <option value=3>3</option>
+        <option value=4>4</option>
+        <option value=5>5</option>
+        <option value=6>6</option>
+        <option value=7>7</option>
+      </select>
+      <input type="button" id="filterBathroomButton" value="Filter by Bathroom"></input>
+      <select id="filterBathroomDropdown">
+        <option value=1>1</option>
+        <option value=2>2</option>
+        <option value=3>3</option>
+        <option value=4>4</option>
+        <option value=5>5</option>
+        <option value=6>6</option>
+        <option value=7>7</option>
+      </select>
+      <input type="button" id="filterPriceButton" value="Filter by Price"></input>
+      <label for="min_price">MIN:</label><input id="minPrice">
+      <label for="max_price">MAX:</label><input id="maxPrice">
+      <input type="button" value="All" id="allButton">
+    </form>
+  </div>
+  <div>
+    <table class="table table-striped table-bordered" id="homeTable">
+      <thead>
+        <tr>
+          <th>Address</th>
+          <th>Postal Code</th>
+          <th>City</th>
+          <th>Community</th>
+          <th>Province</th>
+          <th>Price</th>
+          <th>Bedrooms</th>
+          <th>Bathrooms</th>
+          <th>Image</th>
+          <th>Description</th>
+        </tr>
+      </thead>
+      <tbody id="homeTableBody">
+      </tbody>
+    </table>
+  </div>
+
+  <footer style="background-color: grey">
+    Jason Waid | McMaster University
+  </footer>
+  <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/js/bootstrap.bundle.min.js">
+  </script>
+  <script>
+    $(document).ready(function () {
+      $.ajax({
+        url: '/all', // The route defined in your Node.js server
+        type: 'GET', // The type of request you'll be making
+        dataType: 'json', // The type of data you expect back
+        success: function (data) {
+          // Populate your table with this data
+        },
+        error: function (request, status, error) {
+          // Handle errors here
+        }
+      });
+    });
+
+  </script>
+  <script src="menu.js"></script>
+  <script>
+    function updateTable(data) {
+      var $tableBody = $('#homeTableBody'); // Assuming your table has an ID of 'homesTable'
+      $tableBody.empty(); // Clear existing table data
+
+      // Assuming the data is an array of home objects
+      data.forEach(function (home) {
+        $tableBody.append(
+          '<tr>' +
+          '<td>' + home.address + '</td>' +
+          '<td>' + home.postal_code + '</td>' +
+          '<td>' + home.city + '</td>' +
+          '<td>' + home.community + '</td>' +
+          '<td>' + home.province + '</td>' +
+          '<td>$' + home.price + '</td>' +
+          '<td>' + home.bedrooms + '</td>' +
+          '<td>' + home.bathrooms + '</td>' +
+          '<td><img src="' + home.img + '" class="img-table"></td>' +
+          '<td>' + home.description + '</td>' +
+          '</tr>'
+        );
+      });
+    }
+  </script>
+</body>
+
+</html>
