@@ -1,4 +1,4 @@
-#Advanced Web Programing - Assignment 4 - SFWRTECH4AI3 - McMaster University - Software Engineering
+#Advanced Web Programing - Assignment 4 - SFWRTECH4WP3 - McMaster University - Software Engineering
 
 Primary Learning Objectives:
 - Utilize NodeJS to respond to web requests.
